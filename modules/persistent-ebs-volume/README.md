@@ -45,7 +45,8 @@ The scripts have the following prerequisites:
 
 1. They must be run as root
 1. They must be run on an EC2 instance
-1. The EC2 instance must have an IAM role with permissions to list, attach, and detach volumes (see below)
+1. The EC2 instance must have an IAM role with permissions to list, attach, and detach volumes (see the 
+   [persistent-ebs-volume example](/examples/persistent-ebs-volume))
 1. The EC2 instance must have the AWS CLI and jq installed
 
 Run the `mount-ebs-volume` script in the User Data of your EC2 instances so it mounts the volume at boot. Run the 
@@ -70,34 +71,3 @@ mount-ebs-volume --aws-region us-east-1 --volume-id vol-123456 --volume-id vol-7
 This tells the script to try each volume until it finds one that it can attach. Run `mount-ebs-volume --help` to see 
 all the options.
 
-## IAM Permissions
-
-Here is an example of an IAM policy your EC2 instance needs attached to its IAM role to run these scripts:
-
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "",
-      "Action": [
-        "ec2:AttachVolume",
-        "ec2:DetachVolume"
-      ],
-      "Effect": "Allow",
-      "Resource": [
-        "arn:aws:ec2:us-east-1:<YOUR_AWS_ACCOUNT_ID>:volume/<ID_OF_EBS_VOLUME>",
-        "arn:aws:ec2:us-east-1:<YOUR_AWS_ACCOUNT_ID>:instance/<ID_OF_EC2_INSTANCE>"
-      ]
-    },
-    {
-      "Sid": "",
-      "Action": "ec2:DescribeVolumes",
-      "Effect": "Allow",
-      "Resource": "*"
-    }
-  ]
-}
-```
-
-Check out the [persistent-ebs-volume example](/examples/persistent-ebs-volume) to see what this looks like in action.

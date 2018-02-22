@@ -5,15 +5,14 @@ If you're not a customer, contact us at <info@gruntwork.io> or <http://www.grunt
 
 # Persistent EBS Volume Example
 
-This folder contains an example of how to create an EC2 instance with an EBS volume that is persisted between
+This folder contains an example of how to create an EC2 instance with two EBS volumes that are persisted between
 redeploys. This is useful for servers that persist data to the local hard disk and need that data to still be available
 after a redeploy, such as a database like MySQL, CI server like Jenkins, or CMS like WordPress. Although it should be
 possible to do this with native Terraform using the `aws_ebs_volume` and `aws_volume_attachment` resources, [due to a
 bug](https://github.com/hashicorp/terraform/issues/2957#issuecomment-150613677), the `aws_volume_attachment` resource
 does not work correctly and cannot be used. Therefore, this example includes a Packer template that installs the
-scripts in the [persistent-ebs-volume module in
-script-modules](https://github.com/gruntwork-io/script-modules/tree/persistent-ebs-volume/modules/persistent-ebs-volume)
-and uses those scripts to attach and mount the volume when the instance is booting.
+[persistent-ebs-volume scripts](/modules/persistent-ebs-volume) and uses those scripts to attach and mount the volume 
+when the instance is booting.
 
 Note, an EBS volume can only be associated with a single EC2 Instance, so if you need the data on the disk to be shared
 amongst multiple servers, check out the [Amazon Elastic File System](https://aws.amazon.com/efs/), which provides a
