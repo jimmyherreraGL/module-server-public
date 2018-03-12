@@ -13,6 +13,9 @@ This folder contains scripts you can use to attach [Elastic Network Interfaces
    resource](https://www.terraform.io/docs/providers/aws/r/network_interface_attachment.html) to do this, but this
    resource does not work in cases where you need to attach volumes dynamically, such as with Auto Scaling Groups.
 
+   The script has been tested with Ubuntu 16.04, AmazonLinux v1.x, and CentOS 7, though it may work on other Linux
+   distributions as well.
+
 An ENI allows you to have IP addresses that remain static, even if the underlying EC2 Instances are changing.
 
 Check out the [attach-eni example](/examples/attach-eni) for how to use these scripts with Terraform.
